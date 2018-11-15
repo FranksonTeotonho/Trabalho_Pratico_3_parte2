@@ -123,6 +123,7 @@ int DrawViewPort(viewport *, bufferdevice *, int);
 int DrawLine(point *, point *, window *, viewport *, bufferdevice *, int);
 int DrawObject(object *, window *, viewport *, bufferdevice *, int);
 int Preenchimento(viewport *, bufferdevice *,int,int);
+int PreenchimentoInterc(viewport * , bufferdevice * , int, int, int);
 
 /* Construção das matrizes homogêneas para as operações lineares */
 matrix * SetRotMatrix(float);

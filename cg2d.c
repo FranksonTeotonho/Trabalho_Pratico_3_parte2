@@ -304,12 +304,12 @@ int DrawObject(object * ob, window * win, viewport * port, bufferdevice * dev, i
   return 0;
   }
 //Função auxiliar que identifica linhas horizontais
-int lookaround(int linha, int coluna, viewport * port, bufferdevice * dev, int colorBorder){
+int lookaround(int linha, int coluna, viewport * port, bufferdevice * dev, int colorBorder, int pixels){
 	int i, cont;
 	cont = 0;
 	
 	i = coluna;
-	while(i < coluna + 3){
+	while(i < coluna + pixels){
 		//Verifica se há pixels continuos. Caso tenha algum buraco, zera contador
 		if(dev->buffer[linha*dev->MaxX + i] == colorBorder){cont++;}else{cont = 0;}
 		i++;
@@ -361,7 +361,7 @@ int Preenchimento(viewport * port, bufferdevice * dev, int colorBorder, int colo
 	    	if(dev->buffer[j * dev->MaxX + i] == colorBorder){
 	    		
 	    		//Ignora linhas horizontais
-	    		if(lookaround(j, i, port, dev, colorBorder)){
+	    		if(lookaround(j, i, port, dev, colorBorder,3)){
 	    			//É uma linha horizontal
 	    			h = 1;
 	    		}
@@ -384,6 +384,60 @@ int Preenchimento(viewport * port, bufferdevice * dev, int colorBorder, int colo
 	    		}	
 	    	}
 	    } 
+    }
+
+
+    return 1;
+}
+
+int PreenchimentoInterc(viewport * port, bufferdevice * dev, int colorBorder1, int colorBorder2, int color){
+  int j, i, a, paridade, border, ymin, ymax, h, v;
+
+  paridade = 1;
+  border = 0;
+
+  for(j = port->ymin + 1;j <= port->ymax ;j++) {
+    //Reseta flags ao fim da linha
+    paridade = 1;
+    h = 0;
+      for(i=port->xmin + 1;i<port->xmax;i++) {
+        
+        if(dev->buffer[j * dev->MaxX + i] == colorBorder1){
+          //Ignora linhas horizontais
+          if(lookaround(j, i, port, dev, colorBorder1,10)){
+            //É uma linha horizontal
+            h = 1;
+          }
+          if((!border)&&(h!=1)){
+            //Ocorreu antes da intersec
+            if(paridade == 1){paridade = -1;}
+            //Ocorreu depois da intersec
+            if(paridade == 0){paridade = -2;}
+            //É uma borda
+            border = 1;
+          }
+        } if(dev->buffer[j * dev->MaxX + i] == colorBorder2){
+          //Ignora linhas horizontais
+          if(lookaround(j, i, port, dev, colorBorder2,10)){
+            //É uma linha horizontal
+            h = 1;
+          }
+          if((!border)&&(h!=1)){
+            if(paridade == -1 ){paridade = 0;}
+            //É uma borda
+            border = 1;
+          }
+        }else{
+          //Não é uma borda
+          border = 0;
+          //reseta flag de linha horizontal
+          h = 0;
+          //Preenche
+          if(!paridade){
+            dev -> buffer[j * dev->MaxX + i] = color; 
+          } 
+        }
+      } 
     }
 
 

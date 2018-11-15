@@ -48,7 +48,7 @@ int main(int argc, char ** argv) {
   poligono3 = TransObj(poligono1, SetRotMatrix(75));
   
   //janela = CreateWindow(-6.0, -5.0, 0.0, 0.0);
-  janela = CreateWindow(-12.0, -20.0, 12.0, 0.0);
+  janela = CreateWindow(-12.0, -15.0, 12.0, 5.0);
   porta = CreateViewPort(200,100,500,300);
 
   DrawObject(poligono1,janela,porta,monitor,1);

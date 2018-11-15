@@ -1,8 +1,8 @@
 
 // Para executar:
-// gcc -c cg2d.c
-// gcc exemplo_2d.c -o exemplo_2d cg2d.o -lm -lX11
-// ./exemplo_2d
+// gcc -c c.c
+// gcc c.c -o c cg2d.o -lm -lX11
+// ./c
 
 #include "cg2d.h"
 
@@ -25,46 +25,34 @@ int main(int argc, char ** argv) {
   SetColor(0,0,1,palheta);
   SetColor(1,1,1,palheta);
   
-  poligono1 = CreateObject(9);
-  poligono2 = CreateObject(5);
-  poligono3 = CreateObject(6);
+  //Pentagano
+  poligono1 = CreateObject(5);
+  //Quadrado
+  poligono2 = CreateObject(4);
   
-  SetObject(SetPoint(-11,-1.0,1,3), poligono1);
-  SetObject(SetPoint(-11.0,-11.0,1,3), poligono1);
-  SetObject(SetPoint(-4.0,-11.0,1,3), poligono1);
-  SetObject(SetPoint(-2.0,-9.0,1,3), poligono1);
-  SetObject(SetPoint(-2.0,-7.0,1,3), poligono1);
-  SetObject(SetPoint(-4.0,-5.0,1,3), poligono1);
-  SetObject(SetPoint(-3.0,-4.0,1,3), poligono1);
-  SetObject(SetPoint(-3.0,-2.0,1,3), poligono1);
-  SetObject(SetPoint(-4.0,-1.0,1,3), poligono1);
+  //Pontos pentagono
+  SetObject(SetPoint(-7.0,-3.0,1,1), poligono1);
+  SetObject(SetPoint(-4.0,-4.0,1,1), poligono1);
+  SetObject(SetPoint(-3.0,-6.0,1,1), poligono1);
+  SetObject(SetPoint(-6.0,-9.0,1,1), poligono1);
+  SetObject(SetPoint(-9.0,-8.0,1,1), poligono1);
 
+  //Pontos quadrado
+  SetObject(SetPoint(-1.0,-2.0,1,3), poligono2);
+  SetObject(SetPoint(-1.0,-6.0,1,3), poligono2);
+  SetObject(SetPoint(-6.0,-6.0,1,3), poligono2);
+  SetObject(SetPoint(-6.0,-2.0,1,3), poligono2);
   
-  SetObject(SetPoint(-10.0,-2.0,1,3), poligono2);
-  SetObject(SetPoint(-5.0,-2.0,1,3), poligono2);
-  SetObject(SetPoint(-4.0,-3.0,1,3), poligono2);
-  SetObject(SetPoint(-5.0,-4.0,1,3), poligono2);
-  SetObject(SetPoint(-10.0,-4.0,1,3), poligono2);
+  //janela = CreateWindow(-6.0, -5.0, 0.0, 0.0);
+  janela = CreateWindow(-10.0, -10.0, 0.0, 0.0);
+  porta = CreateViewPort(200,100,500,300);
 
-  SetObject(SetPoint(-10.0,-6.0,1,3), poligono3);
-  SetObject(SetPoint(-5.0,-6.0,1,3), poligono3);
-  SetObject(SetPoint(-4.0,-7.0,1,3), poligono3);
-  SetObject(SetPoint(-4.0,-8.0,1,3), poligono3);
-  SetObject(SetPoint(-5.0,-9.0,1,3), poligono3);
-  SetObject(SetPoint(-10.0,-9.0,1,3), poligono3);
-  
-  //janela = CreateWindow(-20.0, -20.0, 10.0, 15.0);
-  //porta = CreateViewPort(0, 0, 639, 479);
-  janela = CreateWindow(-12.0, -12.0, 0.0, 0.0);
-  porta = CreateViewPort(195,115,445,365);
-
-  DrawObject(poligono1,janela,porta,monitor,3);
+  DrawObject(poligono1,janela,porta,monitor,1);
   DrawObject(poligono2,janela,porta,monitor,3);
-  DrawObject(poligono3,janela,porta,monitor,3); 
   
+  PreenchimentoInterc(porta, monitor, 1,3,2);
 
   Dump2X(monitor,palheta);
  
   return 0;
   }
-
